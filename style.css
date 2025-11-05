@@ -369,3 +369,263 @@ dialog::backdrop {
     padding: 12px 14px;
   }
 }
+
+/* Ultra-small phones: max-width 400px */
+@media (max-width: 400px) {
+  /* Ensure celebrate dialog is visible on small screens */
+  .overlay {
+    padding: 0 12px;
+  }
+  .overlay-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto;
+    border-radius: 18px;
+    padding: 18px 14px;
+  }
+  .overlay-card h2 {
+    font-size: 32px;
+  }
+  .overlay-card p {
+    font-size: 0.95rem;
+  }
+
+  header {
+    gap: 8px;
+  }
+  .brand {
+    gap: 8px;
+  }
+  .logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+  .title {
+    font-size: 24px;
+  }
+
+  .hero {
+    gap: 14px;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+  .typewriter {
+    font-size: 18px;
+    min-height: 2.2em;
+  }
+  .muted {
+    font-size: 0.95rem;
+  }
+
+  .btn-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.95rem;
+    border-radius: 12px;
+  }
+  .btn-yes,
+  .btn-no {
+    font-weight: 700;
+  }
+
+  .meter {
+    height: 10px;
+  }
+
+  .date-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .date-tile {
+    padding: 10px;
+    border-radius: 12px;
+  }
+  .date-tile h3 {
+    font-size: 1.1rem;
+  }
+
+  .scroller {
+    gap: 10px;
+  }
+  .reason {
+    min-width: 200px;
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  #photoFrame {
+    min-height: 120px;
+  }
+
+  .ribbon {
+    font-size: 12px;
+    padding: 8px 12px;
+    bottom: 8px;
+  }
+
+  .overlay-card {
+    padding: 18px 14px;
+    border-radius: 22px;
+  }
+  dialog {
+    border-radius: 18px;
+  }
+  .field input {
+    padding: 10px;
+  }
+}
+
+/* ================================ */
+/* Romantic & Dreamy enhancements 💞 */
+/* ================================ */
+
+/* Soft sparkle veil over the page */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0; /* behind content but above bg */
+  background-image: radial-gradient(
+      2px 2px at 10% 20%,
+      rgba(255, 255, 255, 0.35) 30%,
+      transparent 31%
+    ),
+    radial-gradient(
+      2px 2px at 30% 80%,
+      rgba(255, 255, 255, 0.25) 30%,
+      transparent 31%
+    ),
+    radial-gradient(
+      2px 2px at 70% 30%,
+      rgba(255, 255, 255, 0.28) 30%,
+      transparent 31%
+    ),
+    radial-gradient(
+      2px 2px at 85% 60%,
+      rgba(255, 255, 255, 0.22) 30%,
+      transparent 31%
+    );
+  background-repeat: repeat;
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+@keyframes twinkle {
+  from {
+    opacity: 0.35;
+    filter: blur(0px);
+  }
+  to {
+    opacity: 0.65;
+    filter: blur(0.2px);
+  }
+}
+
+/* Gentle glow on cards */
+.card {
+  position: relative;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  z-index: -1;
+  background: radial-gradient(
+      120px 80px at 10% 0%,
+      rgba(255, 182, 206, 0.25),
+      transparent 60%
+    ),
+    radial-gradient(
+      160px 100px at 90% 100%,
+      rgba(179, 157, 219, 0.22),
+      transparent 60%
+    );
+  filter: blur(10px);
+}
+
+/* Sheen / shimmer on primary actions */
+#celebrateBtn {
+  position: relative;
+  overflow: hidden;
+}
+#celebrateBtn::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -30%;
+  width: 40%;
+  height: 180%;
+  transform: rotate(25deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  animation: sheen 3.6s linear infinite;
+}
+@keyframes sheen {
+  0% {
+    left: -40%;
+  }
+  100% {
+    left: 140%;
+  }
+}
+
+/* Soft float on logo and ribbon */
+.logo {
+  animation: floaty 6s ease-in-out infinite;
+}
+.ribbon {
+  animation: floaty 7s ease-in-out infinite;
+}
+@keyframes floaty {
+  0% {
+    transform: translateY(0) translateX(-50%);
+  }
+  50% {
+    transform: translateY(-4px) translateX(-50%);
+  }
+  100% {
+    transform: translateY(0) translateX(-50%);
+  }
+}
+
+/* Buttons glow on hover/tap */
+.btn-yes {
+  box-shadow: 0 10px 24px rgba(34, 195, 154, 0.25),
+    0 0 0 0 rgba(34, 195, 154, 0);
+}
+.btn-yes:hover {
+  box-shadow: 0 12px 28px rgba(34, 195, 154, 0.35),
+    0 0 0 6px rgba(34, 195, 154, 0.12);
+}
+.btn-no:hover {
+  box-shadow: 0 12px 28px rgba(255, 139, 148, 0.28),
+    0 0 0 6px rgba(255, 139, 148, 0.12);
+}
+
+/* Overlay polish */
+.overlay-card {
+  box-shadow: 0 30px 60px rgba(179, 157, 219, 0.25);
+}
+
+/* Mobile: keep dreamy look but lighter effects */
+@media (max-width: 400px) {
+  body::after {
+    opacity: 0.4;
+    filter: blur(0.3px);
+  }
+  #celebrateBtn::after {
+    animation-duration: 4.5s;
+  }
+}
