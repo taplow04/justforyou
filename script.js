@@ -1,8 +1,9 @@
 // =========================
-// Romantic Proposal — Script
+// Romantic Proposal — Script (Complete)
+// Mobile-optimized, Romantic & Dreamy effects
 // =========================
 
-// Local storage helper
+// ---- Local storage helper ----
 const store = {
   get(k, d = null) {
     try {
@@ -16,7 +17,7 @@ const store = {
   },
 };
 
-// Animated floating hearts background
+// ---- Hearts background ----
 const heartsEl = document.getElementById("hearts");
 const colors = ["#ff8fbd", "#b39ddb", "#ffd1e6", "#a8e6cf", "#ffb3c1"];
 function spawnHearts() {
@@ -47,7 +48,7 @@ addEventListener("resize", () => {
   window.__hR = setTimeout(spawnHearts, 150);
 });
 
-// Typewriter effect
+// ---- Typewriter ----
 const typer = document.getElementById("typewriter");
 const lines = [
   () => `Hi <b>${store.get("herName", "you")}</b>,`,
@@ -90,7 +91,7 @@ function pause(ms) {
 
 typeText(typer, lines);
 
-// Name personalization
+// ---- Personalize name ----
 const dearLine = document.getElementById("dearLine");
 function refreshName() {
   const name = store.get("herName", "you");
@@ -100,7 +101,7 @@ function refreshName() {
 }
 refreshName();
 
-// Love meter
+// ---- Love meter ----
 const meterFill = document.getElementById("meterFill");
 let meter = store.get("meter", 12);
 function drawMeter() {
@@ -113,10 +114,23 @@ function bumpMeter(n = 6) {
 }
 drawMeter();
 
-// Buttons — YES / NO
+// ---- Buttons: YES / NO ----
 const yesBtn = document.getElementById("yesBtn");
 const yesBtn2 = document.getElementById("yesBtn2");
 const noBtn = document.getElementById("noBtn");
+
+// Add romantic pulse to YES buttons until accepted
+(function injectYesPulseCSS() {
+  const css = `
+    .pulse-yes { animation: yesPulse 1.2s ease-in-out infinite; }
+    @keyframes yesPulse { 0% { transform: scale(1); } 50% { transform: scale(1.06); } 100% { transform: scale(1); } }
+  `;
+  const tag = document.createElement("style");
+  tag.textContent = css;
+  document.head.appendChild(tag);
+})();
+if (yesBtn) yesBtn.classList.add("pulse-yes");
+if (yesBtn2) yesBtn2.classList.add("pulse-yes");
 
 function mischievousMove(btn) {
   if (!btn) return;
@@ -137,7 +151,7 @@ if (noBtn) {
   });
 }
 
-// Overlay after YES
+// ---- Overlay after YES ----
 const overlay = document.getElementById("overlay");
 const closeOverlay = document.getElementById("closeOverlay");
 const celebrateBtn = document.getElementById("celebrateBtn");
@@ -145,6 +159,9 @@ function sayYes() {
   if (overlay) {
     overlay.classList.add("show");
   }
+  // stop pulsing once she accepts
+  if (yesBtn) yesBtn.classList.remove("pulse-yes");
+  if (yesBtn2) yesBtn2.classList.remove("pulse-yes");
   confettiBurst();
   bumpMeter(20);
 }
@@ -161,9 +178,11 @@ if (celebrateBtn)
     heartStorm();
   });
 
-// Confetti (lightweight)
+// ---- Confetti (gentler on tiny phones) ----
 function confettiBurst(amount = 220) {
-  const particles = amount;
+  const isTiny = window.matchMedia("(max-width: 400px)").matches;
+  const particles = isTiny ? Math.min(amount, 140) : amount;
+
   for (let i = 0; i < particles; i++) {
     const p = document.createElement("i");
     p.style.position = "fixed";
@@ -178,14 +197,16 @@ function confettiBurst(amount = 220) {
     p.style.zIndex = 8;
     document.body.appendChild(p);
     const endY = window.innerHeight + 20;
-    const dx = (Math.random() * 2 - 1) * 120; // horizontal drift
-    const duration = 1200 + Math.random() * 1200;
+    const dx = (Math.random() * 2 - 1) * (isTiny ? 80 : 120);
+    const duration =
+      (isTiny ? 1800 : 1200) + Math.random() * (isTiny ? 1600 : 1200);
     const startX = p.getBoundingClientRect().left;
     const start = performance.now();
     (function animate(t) {
       const elapsed = t - start;
       const prog = Math.min(1, elapsed / duration);
-      const x = startX + dx * prog + Math.sin(prog * 6 * Math.PI) * 16;
+      const x =
+        startX + dx * prog + Math.sin(prog * 6 * Math.PI) * (isTiny ? 10 : 16);
       const y = -10 + prog * endY;
       p.style.transform = `translate(${x - startX}px, ${y}px) rotate(${
         prog * 720
@@ -199,8 +220,12 @@ function confettiBurst(amount = 220) {
     })(start);
   }
 }
+
+// ---- Heart storm (softer on tiny phones) ----
 function heartStorm() {
-  for (let i = 0; i < 30; i++) {
+  const isTiny = window.matchMedia("(max-width: 400px)").matches;
+  const count = isTiny ? 20 : 30;
+  for (let i = 0; i < count; i++) {
     const h = document.createElement("div");
     h.className = "heart";
     h.style.position = "fixed";
@@ -210,9 +235,9 @@ function heartStorm() {
     h.style.opacity = 0.95;
     h.style.filter = "drop-shadow(0 6px 14px rgba(0,0,0,.15))";
     document.body.appendChild(h);
-    const dx = (Math.random() * 2 - 1) * 220;
-    const dy = (Math.random() * 2 - 1) * 160;
-    const dur = 900 + Math.random() * 600;
+    const dx = (Math.random() * 2 - 1) * (isTiny ? 180 : 220);
+    const dy = (Math.random() * 2 - 1) * (isTiny ? 130 : 160);
+    const dur = (isTiny ? 1200 : 900) + Math.random() * (isTiny ? 900 : 600);
     const start = performance.now();
     (function go(t) {
       const e = t - start;
@@ -227,13 +252,19 @@ function heartStorm() {
   }
 }
 
-// Music controls
+// ---- Music controls (local file picker) ----
 const music = document.getElementById("music");
 const playBtn = document.getElementById("playBtn");
 let playing = false;
+
+// Simplified play/pause (no picker). Requires index.html to set src="assets/music.mp3"
 if (playBtn) {
   playBtn.addEventListener("click", async () => {
     try {
+      if (!music || !music.src) {
+        toast("Add your MP3 at assets/music.mp3");
+        return;
+      }
       if (!playing) {
         await music.play();
         playBtn.textContent = "Pause music ⏸";
@@ -248,7 +279,7 @@ if (playBtn) {
   });
 }
 
-// Reasons scroller
+// ---- Reasons scroller ----
 const reasons = [
   "Your smile is my favorite sunrise",
   "You listen like it’s an art",
@@ -273,7 +304,7 @@ if (scroller) {
   });
 }
 
-// Compliment generator
+// ---- Compliment generator ----
 const compliments = [
   "If I had a garden, your smile would be the sunflower. 🌻",
   "You make my heart do tiny happy cartwheels. 🤸‍♂️",
@@ -290,7 +321,7 @@ if (complimentBtn) {
   });
 }
 
-// Toasts
+// ---- Toasts ----
 function toast(message) {
   const t = document.createElement("div");
   t.textContent = message;
@@ -316,7 +347,7 @@ function toast(message) {
   }, 1800);
 }
 
-// Date counter
+// ---- Date counter ----
 const dateInput = document.getElementById("dateInput");
 const saveDate = document.getElementById("saveDate");
 const dEls = {
@@ -365,7 +396,7 @@ if (saveDate) {
   });
 }
 
-// Photo frame
+// ---- Photo frame ----
 const photoInput = document.getElementById("photoInput");
 const photoFrame = document.getElementById("photoFrame");
 if (photoInput) {
@@ -389,45 +420,60 @@ if (photoInput) {
   });
 }
 
-// Personalize prompt (name)
+// ---- Personalize dialog (name + start date) ----
 (function maybeAskName() {
-  const nameFromLS = store.get("herName", null);
-  if (nameFromLS) return;
+  // Show the dialog only once (persisted).
+  if (store.get("__onboarded", false)) return;
+
   const dlg = document.createElement("dialog");
   dlg.innerHTML = `
-    <form method="dialog">
+    <form id="onboardForm" method="dialog">
       <div class="dlg-body">
         <h3 style="margin:4px 0 8px">Before we start… 💫</h3>
-        <div class="field"><label>What should I call you?</label><input id="herNameInput" placeholder="Your name" required></div>
+        <div class="field"><label>What should I call you?</label><input id="herNameInput" placeholder="Your name"></div>
         <div class="field"><label>When did I start liking you? (optional)</label><input id="startDateInput" type="datetime-local"></div>
         <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:8px">
-          <button class="btn" value="cancel">Skip</button>
-          <button class="btn btn-yes" value="ok">Save</button>
+          <button class="btn" id="skipBtn" value="cancel" type="button">Skip</button>
+          <button class="btn btn-yes" id="saveBtn" value="ok" type="submit">Save</button>
         </div>
       </div>
     </form>`;
   document.body.appendChild(dlg);
   dlg.showModal();
-  dlg.addEventListener("close", () => {
+
+  const form = dlg.querySelector("#onboardForm");
+  const skip = dlg.querySelector("#skipBtn");
+
+  // Save explicitly
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
     const name = dlg.querySelector("#herNameInput")?.value?.trim();
     const date = dlg.querySelector("#startDateInput")?.value;
     if (name) {
       store.set("herName", name);
-      refreshName();
-      typeText(typer, []);
     }
     if (date) {
       store.set("startDate", date);
-      if (dateInput) {
-        dateInput.value = date;
-      }
-      updateCounter();
     }
+    store.set("__onboarded", true);
+    refreshName();
+    updateCounter();
+    dlg.close("ok");
+    dlg.remove();
+  });
+
+  // Skip also marks onboarded so it won't ask again
+  skip.addEventListener("click", () => {
+    if (!store.get("herName", null)) store.set("herName", "you");
+    store.set("__onboarded", true);
+    refreshName();
+    updateCounter();
+    dlg.close("cancel");
     dlg.remove();
   });
 })();
 
-// Accessibility niceties
+// ---- Accessibility ----
 addEventListener("keydown", (e) => {
   if (e.key && e.key.toLowerCase() === "y") {
     sayYes();
