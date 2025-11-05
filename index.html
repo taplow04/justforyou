@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>For You ❤️</title>
+    <link href="style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="hearts" id="hearts"></div>
+
+    <div class="container">
+      <header>
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="#fff"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 21s-6.716-4.35-9.657-7.29C-1.586 12.033.21 6.37 4.828 6.049 7.017 5.893 8.79 7.07 10 8.667 11.21 7.07 12.983 5.893 15.172 6.05 19.79 6.37 21.586 12.033 21.657 13.71 18.716 16.65 12 21 12 21z"
+              />
+            </svg>
+          </div>
+          <div>
+            <div class="title" id="brandTitle">For You</div>
+            <small class="muted">A tiny website from my heart</small>
+          </div>
+        </div>
+        <div class="pill"><small>Best viewed with a smile 😊</small></div>
+      </header>
+
+      <section class="hero">
+        <div class="card">
+          <div class="typewriter" id="typewriter"></div>
+          <p class="muted" id="dearLine">Dear you, this one's just for you.</p>
+          <div class="btn-row">
+            <button class="btn btn-yes" id="yesBtn">Yes, I will! 💍</button>
+            <button class="btn btn-no" id="noBtn">Umm… not sure</button>
+            <button class="btn" id="playBtn">Play music ▶️</button>
+          </div>
+          <div class="meter"><i id="meterFill"></i></div>
+        </div>
+
+        <div class="card side-card">
+          <h3>Since the day I liked you…</h3>
+          <div class="date-grid" id="dateGrid">
+            <div class="date-tile">
+              <h3 id="days">0</h3>
+              <small class="muted">days</small>
+            </div>
+            <div class="date-tile">
+              <h3 id="hours">0</h3>
+              <small class="muted">hours</small>
+            </div>
+            <div class="date-tile">
+              <h3 id="mins">0</h3>
+              <small class="muted">mins</small>
+            </div>
+            <div class="date-tile">
+              <h3 id="secs">0</h3>
+              <small class="muted">secs</small>
+            </div>
+          </div>
+          <small class="muted">Tip: set your special date below ✨</small>
+          <div class="field">
+            <label>Our special date</label>
+            <input id="dateInput" type="datetime-local" />
+          </div>
+          <button class="btn" id="saveDate">Save date</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3>10 little reasons I adore you</h3>
+        <div class="scroller" id="reasons"></div>
+      </section>
+
+      <section class="card">
+        <h3>Your photo makes everything brighter</h3>
+        <p class="muted">
+          Add a photo (it stays only on your device). I’ll frame it beautifully
+          💫
+        </p>
+        <input type="file" id="photoInput" accept="image/*" />
+        <div id="photoFrame" class="photo-frame"></div>
+      </section>
+
+      <section class="card">
+        <h3>A tiny note</h3>
+        <p class="muted">
+          I built this just to say… I like you a lot — like a lot a lot. 💖
+        </p>
+        <div class="btn-row">
+          <button class="btn btn-yes" id="yesBtn2">Okay… Yes! 🥹</button>
+          <button class="btn" id="complimentBtn">Need a compliment? 💌</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="ribbon" id="ribbon">Made with love & Creativity 🍦</div>
+
+    <div class="overlay" id="overlay">
+      <div class="overlay-card">
+        <h2>Yay! You said YES! 🎉</h2>
+        <p>Thank you for making me the happiest. Let’s make this official?</p>
+        <div class="btn-row" style="justify-content: center">
+          <button class="btn btn-yes" id="celebrateBtn">Celebrate ✨</button>
+          <button class="btn" id="closeOverlay">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <audio id="music" preload="auto">
+      <source src="assets/my_song.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script src="script.js"></script>
+  </body>
+</html>
